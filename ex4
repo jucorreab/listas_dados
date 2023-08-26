@@ -1,0 +1,93 @@
+/*Crie uma struct chamada "Contato" que armazene o nome e o número de telefone de uma pessoa. escreva
+um programa que permita ao usuário adicionar contatos, listar todos os contatos e buscar um contato pelo nome*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+#define MAX_CONTATOS 100
+
+struct Contato {
+    char nome[50];
+    char telefone[20];
+};
+
+void adicionar(struct Contato listaContatos[], int *numContatos) {
+    if (*numContatos < 10) {
+        struct Contato novoContato;
+        printf("Nome: ");
+        scanf("%s", novoContato.nome);
+        printf("Telefone: ");
+        scanf("%s", novoContato.telefone);
+        listaContatos[*numContatos] = novoContato;
+        (*numContatos)++;
+        printf("Contato adicionado!\n");
+    } else {
+        printf("Não é mais possível adicionar um contato.\n");
+    } 
+}
+
+void listar(struct Contato listaContatos[], int numContatos) {
+    int i;
+	printf("Lista de contatos:\n");
+    for (i = 0; i < numContatos; ++i) {
+        printf("Nome: %s || Telefone: %s\n", listaContatos[i].nome, listaContatos[i].telefone);
+    } 
+}
+
+void buscar(struct Contato listaContatos[], int numContatos, const char *nomeBusca) {
+    int encontrado = 0;
+    int i;
+    for (i = 0; i < numContatos; ++i) {
+        if (strcmp(listaContatos[i].nome, nomeBusca) == 0) {
+            printf("Contato encontrado!\n");
+            printf("Nome: %s || Telefone: %s\n", listaContatos[i].nome, listaContatos[i].telefone);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("Contato não salvo!\n");
+    }
+}
+
+int main() {
+	setlocale(LC_ALL, "Portuguese");
+    struct Contato listaContatos[MAX_CONTATOS];
+    int numContatos = 0;
+    int i;
+    int escolha;
+    char nomeBusca[50];
+
+    while (1) {
+        printf("\nEscolha uma opção:\n");
+        printf("1. Adicionar contato\n");
+        printf("2. Listar contatos\n");
+        printf("3. Buscar contato por nome\n");
+        printf("4. Sair\n");
+        
+        scanf("%d", &escolha);
+
+        if (escolha == 1) {
+        	system("cls");
+            adicionar(listaContatos, &numContatos);
+        } else if (escolha == 2) {
+        	system("cls");
+            listar(listaContatos, numContatos);
+        } else if (escolha == 3) {
+        	system("cls");
+            printf("Digite o nome do contato a ser buscado: ");
+            scanf("%s", nomeBusca);
+            buscar(listaContatos, numContatos, nomeBusca);
+        } else if (escolha == 4) {
+        	system("cls");
+        	printf("Tchau!!");
+            break;
+        } else {
+            printf("Tente novamente.\n");
+        }
+    }
+
+    return 0;
+}
