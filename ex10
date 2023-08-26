@@ -1,0 +1,41 @@
+/*Crie uma struct chamada "Moeda" que possa armazenar valores em dólares e euros. Escreva um programa
+que permita ao usuário escolher uma moeda e converter um valor entre dólares e euros, usando a taxa de câmbio atual.*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+struct Moeda {
+    float dolar;
+    float euro;
+};
+
+float dolarParaEuro(float vDolar, float taxa) {
+    return vDolar * taxa;
+}
+
+float euroParaDolar(float vEuro, float taxaC) {
+    return vEuro / taxaC;
+}
+
+int main() {
+	setlocale(LC_ALL, "Portuguese");
+    float taxaC;
+    
+    printf("Informe a taxa de câmbio de dólar para euro: ");
+    scanf("%f", &taxaC);
+    
+    struct Moeda moeda;
+
+    printf("Informe o valor (dólar):\n");
+    scanf("%f", &moeda.dolar);
+
+    moeda.euro = dolarParaEuro(moeda.dolar, taxaC);
+    printf("%.2f dólares valem %.2f euros\n", moeda.dolar, moeda.euro);
+
+    printf("Informe o valor (euro):\n");
+    scanf("%f", &moeda.euro);
+
+    moeda.dolar = euroParaDolar(moeda.euro, taxaC);
+    printf("%.2f euros valem %.2f dólares\n", moeda.euro, moeda.dolar);
+
+    return 0;
+}
