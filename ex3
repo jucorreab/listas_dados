@@ -1,0 +1,46 @@
+/*Crie uma struct chamada "Ponto" que represente um ponto no plano cartesiano com coordenadas x e y.
+Em seguida, implemente funções para calcular a distância entre dois pontos e a inclinação da reta que os conecta.*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <locale.h>
+struct Ponto {
+    float x;
+    float y;
+};
+
+float calcularDistancia(struct Ponto p1, struct Ponto p2) {
+    float deltaX = p2.x - p1.x;
+    float deltaY = p2.y - p1.y;
+    return sqrt(deltaX * deltaX + deltaY * deltaY);
+}
+
+float calcularInclinacao(struct Ponto p1, struct Ponto p2) {
+    if (p2.x - p1.x == 0) {
+        printf("A inclinação é infinita (reta vertical).\n");
+        return INFINITY;
+    } else {
+        return (p2.y - p1.y) / (p2.x - p1.x);
+    }
+}
+
+int main() {
+	setlocale(LC_ALL, "Portuguese");
+    struct Ponto ponto1, ponto2;
+
+    printf("Informe as coordenadas do primeiro ponto (x y): ");
+    scanf("%f %f", &ponto1.x, &ponto1.y);
+
+    printf("Informe as coordenadas do segundo ponto (x y): ");
+    scanf("%f %f", &ponto2.x, &ponto2.y);
+
+    float distancia = calcularDistancia(ponto1, ponto2);
+    printf("A distância entre os pontos é %.2f\n", distancia);
+
+    float inclinacao = calcularInclinacao(ponto1, ponto2);
+    if (isfinite(inclinacao)) {
+        printf("A inclinação da reta que conecta os pontos é %.2f\n", inclinacao);
+    }
+
+    return 0;
+}
