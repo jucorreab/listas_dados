@@ -1,0 +1,30 @@
+/*Crie uma struct chamada "Pessoa" que contenha os seguintes campos: nome, idade e altura. Em seguida,
+escreva um programa que declare uma variável do tipo Pessoa, preencha seus campos e imprima os valores*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct {
+    int idade;
+    float altura;
+    char nome[30];
+} Pessoa;
+
+Pessoa SetPessoa(int idade, float altura, const char *nome) {
+    Pessoa P;
+    P.idade = idade;
+    P.altura = altura;
+    strcpy(P.nome, nome);
+    return P;
+}
+
+void imprimePessoa(Pessoa P) {
+    printf("Idade: %d  Altura: %.2f  Nome: %s\n", P.idade, P.altura, P.nome);
+}
+
+int main(void) {
+    Pessoa Julia = SetPessoa(19, 1.70, "Julia");  // Corrigindo chamada da função e atribuição
+    imprimePessoa(Julia);
+    return 0;
+}
+
