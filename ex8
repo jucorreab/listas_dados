@@ -1,0 +1,59 @@
+/*Crie uma struct chamada "Produto" com campos para nome, preço e quantidade em estoque. Escreva um
+programa que permita ao usuário comprar produtos, atualizando o estoque e calculando o total da compra.*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+
+struct Produto {
+    char nome[100];
+    float preco;
+    int estoque;
+};
+
+void comprarProduto(struct Produto *produto, int qntComprada) {
+    if (produto->estoque >= qntComprada) {
+        float total = produto->preco * qntComprada;
+        system("cls");
+        printf("====Compra realizada:====\n\n");
+        printf("Produto: %s\n", produto->nome);
+        printf("Quantidade: %d\n", qntComprada);
+        printf("Total da compra: %.2f\n", total);
+        produto->estoque -= qntComprada;
+    } else {
+        printf("Não há essa quantidade no estoque\n");
+    } system("pause");
+    system("cls");
+} 
+int main() {
+	int escolha;
+	int qntComprada;
+	setlocale(LC_ALL, "Portuguese"); 
+    struct Produto produto1 = {"Miojo", 5.99, 15};
+    struct Produto produto2 = {"Suco", 9.99, 10};
+
+    while (1){
+        printf("\nInforme o produto que deseja comprar:\n");
+        printf("1. %s (Preço: %.2f | Estoque: %d)\n", produto1.nome, produto1.preco, produto1.estoque);
+        printf("2. %s (Preço: %.2f | Estoque: %d)\n", produto2.nome, produto2.preco, produto2.estoque);
+        printf("3. Sair\n");
+		
+        scanf("%d", &escolha);
+		system("cls");
+        if (escolha == 1 || escolha == 2) {
+            struct Produto *produtoSelecionado = (escolha == 1) ? &produto1 : &produto2;
+            
+            printf("\nQuantidade desejada: ");
+            scanf("%d", &qntComprada);
+
+            comprarProduto(produtoSelecionado, qntComprada);
+        } else if (escolha == 3) {
+        	printf("Tchau!!");
+            break;
+        } else {
+            printf("Tente novamente.\n");
+        }
+    }
+
+    return 0;
+}
+
