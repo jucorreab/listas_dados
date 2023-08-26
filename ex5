@@ -1,0 +1,100 @@
+/*Crie uma struct chamada "Livro" com campos para título, autor e ano de publicação. Escreva um programa
+que permita ao usuário adicionar informações de livros, listar todos os livros cadastrados e buscar livros por autor.*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+#define MAX_LIVROS 100
+
+struct Livro {
+    char titulo[100];
+    char autor[50];
+    int ano;
+};
+
+void adicionarLivro(struct Livro listaLivros[], int *nLivros) {
+    if (*nLivros < MAX_LIVROS) {
+        struct Livro addLivro;
+        printf("Título: ");
+        scanf(" %[^\n]", addLivro.titulo);  
+        printf("Autor: ");
+        scanf(" %[^\n]", addLivro.autor);
+        printf("Ano de publicação: \n");
+        scanf("%d", &addLivro.ano);
+        listaLivros[*nLivros] = addLivro;
+        (*nLivros)++;
+        printf("Livro adicionado com sucesso!\n");
+    } else {
+        printf("A lista de livros está cheia.\n");
+    } 
+	system("pause");
+	system("cls");
+}  
+
+void listarLivros(struct Livro listaLivros[], int nLivros) {
+	int i;
+    printf("\nLista de livros:\n");
+    for (i = 0; i < nLivros; ++i) {
+        printf("Título: %s | Autor: %s | Ano: %d\n",
+               listaLivros[i].titulo, listaLivros[i].autor, listaLivros[i].ano);
+    } 
+    system("pause");
+    system("cls");
+}  
+
+void buscarLivrosPorAutor(struct Livro listaLivros[], int nLivros, const char *autorBusca) {
+    int encontrados = 0;
+    int i;
+    printf("Livros do autor %s:\n", autorBusca);
+    for (i = 0; i < nLivros; ++i) {
+        if (strcmp(listaLivros[i].autor, autorBusca) == 0) {
+            printf("Título: %s | Ano: %d\n",
+                   listaLivros[i].titulo, listaLivros[i].ano);
+            encontrados++;
+        }
+    }
+
+    if (encontrados == 0) {
+        printf("\nNenhum livro encontrado desse autor.\n");
+    }
+    system("pause");
+    system("cls");
+}
+
+int main() {
+	setlocale(LC_ALL, "Portuguese");
+    struct Livro listaLivros[MAX_LIVROS];
+    int nLivros = 0;
+
+    while (1) {
+        printf("\nEscolha uma opção:\n");
+        printf("1. Adicionar livro\n");
+        printf("2. Listar livros\n");
+        printf("3. Buscar livros por autor\n");
+        printf("4. Sair\n");
+
+        int escolha;
+        scanf("%d", &escolha);
+
+        if (escolha == 1) {
+            adicionarLivro(listaLivros, &nLivros);
+        } else if (escolha == 2) {
+            listarLivros(listaLivros, nLivros);
+        } else if (escolha == 3) {
+            char autorBusca[50];
+            printf("\n Digite o nome do autor a ser buscado: \n");
+            scanf(" %[^\n]", autorBusca);
+            buscarLivrosPorAutor(listaLivros, nLivros, autorBusca);
+        } else if (escolha == 4) {
+        	printf("Tchau!!");
+            break;
+        } else {
+            printf("Opção inválida. Tente novamente.\n");
+        }
+    }
+
+    return 0;
+}
+
+
