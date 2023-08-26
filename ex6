@@ -1,0 +1,58 @@
+/*Crie uma struct chamada "Estudante" com campos para nome, matrícula e notas em três disciplinas.
+Implemente funções para calcular a média das notas e determinar se um aluno está aprovado (média maior ou igual a 7).*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <locale.h>
+
+struct Estudante {
+    char nome[100];
+    int matricula;
+    float notas[3];
+};
+
+float calcularMedia(const struct Estudante *estudante) {
+	int i;
+    float soma = 0;
+    for (i = 0; i < 3; ++i) {
+        soma += estudante->notas[i];
+    }
+    return soma / 3;
+}
+
+int main() {
+	setlocale(LC_ALL, "Portuguese"); 
+    struct Estudante estudante;
+	int i;
+	
+    printf("Nome do estudante: ");
+    scanf("%s", estudante.nome);
+
+    printf("Matrícula: ");
+    scanf("%d", &estudante.matricula);
+
+    for (i = 0; i < 3; ++i) {
+        printf("Nota da disciplina %d: ", i + 1);
+        scanf("%f", &estudante.notas[i]);
+    }
+    
+    system("cls");
+
+    printf("\nInformações do estudante:\n");
+    printf("Nome: %s\n", estudante.nome);
+    printf("Matrícula: %d\n", estudante.matricula);
+    for (i = 0; i < 3; ++i) {
+        printf("Nota da disciplina %d: %.2f\n", i + 1, estudante.notas[i]);
+    }
+
+    float media = calcularMedia(&estudante);
+    printf("Média das notas: %.2f\n", media);
+
+    if (media >= 7.0) {
+        printf("Estudante aprovado!\n");
+    } else {
+        printf("Estudante reprovado.\n");
+    }
+
+    return 0;
+}
