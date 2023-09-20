@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+
+void ordenarPorInsercaoDecrescente(int array[], int tamanho) {
+    int i, chave, j;
+    for (i = 1; i < tamanho; i++) {
+        chave = array[i];
+        j = i - 1;
+        while (j >= 0 && array[j] < chave) {
+            array[j + 1] = array[j];
+            j = j - 1;
+        }
+        array[j + 1] = chave;
+    }
+}
+
+int main() {
+	setlocale(LC_ALL, "Portuguese");
+    int tamanho;
+    int i;
+
+    printf("Digite a quantidade de elementos: \n");
+    scanf("%d", &tamanho);
+
+    int array[tamanho];
+
+    printf("\nDigite os elementos separados por espaço:\n");
+
+    for (i = 0; i < tamanho; i++) {
+        scanf("%d", &array[i]);
+    }
+
+    ordenarPorInsercaoDecrescente(array, tamanho);
+
+    printf("\nArray ordenado em ordem decrescente:\n");
+    for (i = 0; i < tamanho; i++) {
+        printf("%d ", array[i]);
+    }
+
+    return 0;
+}
