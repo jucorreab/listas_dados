@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void trocar(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int particionar(int matriz[][3], int esquerda, int direita, int coluna) {
+    int pivo = matriz[direita][coluna];
+    int i = (esquerda - 1);
+    int j;
+    int k;
+
+    for (j = esquerda; j <= direita - 1; j++) {
+        if (matriz[j][coluna] >= pivo) {
+            i++;
+            for ( k = 0; k < 3; k++) {
+                trocar(&matriz[i][k], &matriz[j][k]);
+            }
+        }
+    }
+    for (k = 0; k < 3; k++) {
+        trocar(&matriz[i + 1][k], &matriz[direita][k]);
+    }
+    return (i + 1);
+}
+
+void quicksort(int matriz[][3], int esquerda, int direita, int coluna) {
+    if (esquerda < direita) {
+        int indicePivo = particionar(matriz, esquerda, direita, coluna);
+        quicksort(matriz, esquerda, indicePivo - 1, coluna);
+        quicksort(matriz, indicePivo + 1, direita, coluna);
+    }
+}
+
+int main() {
+    int matriz[][3] = {{5, 2, 9}, {1, 8, 3}, {7, 4, 6}};
+    int linhas = sizeof(matriz) / sizeof(matriz[0]);
+    int coluna = 0; 
+    int i;
+    int j;
+
+    printf("Matriz original:\n");
+    for (i = 0; i < linhas; i++) {
+        for (j = 0; j < 3; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+
+    quicksort(matriz, 0, linhas - 1, coluna);
+
+    printf("\nMatriz ordenada pela coluna %d usando o Quicksort:\n", coluna);
+    for (i = 0; i < linhas; i++) {
+        for ( j = 0; j < 3; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
