@@ -1,0 +1,42 @@
+//- Escreva uma função em C que realize uma busca sequencial em uma matriz bidimensional de inteiros para encontrar um valor específico fornecido pelo usuário. A função deve retornar
+//a posição da primeira ocorrência do valor ou informar que o valor não foi encontrado.
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+void buscarValor(int matriz[][3], int linhas, int colunas, int valor, int *linhaEncontrada, int *colunaEncontrada) {
+	int i;
+	int j;
+    for (i = 0; i < linhas; i++) {
+        for (j = 0; j < colunas; j++) {
+            if (matriz[i][j] == valor) {
+                *linhaEncontrada = i;
+                *colunaEncontrada = j;
+                return; 
+            }
+        }
+    }
+    *linhaEncontrada = -1;
+    *colunaEncontrada = -1;
+}
+
+int main() {
+	setlocale(LC_ALL, "Portuguese");
+    int matriz[][3] = {{5, 2, 9}, {1, 8, 3}, {7, 4, 6}};
+    int linhas = sizeof(matriz) / sizeof(matriz[0]);
+    int colunas = sizeof(matriz[0]) / sizeof(matriz[0][0]);
+
+    int valorBuscado;
+    printf("Digite o valor que deseja buscar na matriz: ");
+    scanf("%d", &valorBuscado);
+
+    int linhaEncontrada, colunaEncontrada;
+    buscarValor(matriz, linhas, colunas, valorBuscado, &linhaEncontrada, &colunaEncontrada);
+
+    if (linhaEncontrada != -1 && colunaEncontrada != -1) {
+        printf("Valor encontrado na posição (%d, %d)\n", linhaEncontrada, colunaEncontrada);
+    } else {
+        printf("Valor não encontrado na matriz.\n");
+    }
+
+    return 0;
+}
