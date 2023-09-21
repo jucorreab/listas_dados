@@ -1,0 +1,49 @@
+//Escreva um programa em C que ordene uma matriz bidimensional (uma matriz de inteiros, por exemplo) usando o algoritmo de ordenação por inserção.
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+
+void iMatriz(int matriz[][3], int linhas, int colunas) {
+	int i;
+	int j;
+    for ( i = 0; i < linhas; i++) {
+        for ( j = 0; j < colunas; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void ordenarMatriz(int matriz[][3], int linhas, int coluna) {
+	int i;
+    for (i = 0; i < linhas; i++) {
+        int chave = matriz[i][coluna];
+        int j = i - 1;
+        while (j >= 0 && matriz[j][coluna] < chave) {
+            matriz[j + 1][coluna] = matriz[j][coluna];
+            j--;
+        }
+        matriz[j + 1][coluna] = chave;
+    }
+}
+
+int main() {
+	setlocale(LC_ALL, "Portuguese");
+    int matriz[][3] = {{5, 2, 9}, {1, 8, 3}, {7, 4, 6}};
+    int linhas = sizeof(matriz) / sizeof(matriz[0]);
+    int colunas = sizeof(matriz[0]) / sizeof(matriz[0][0]);
+
+    int coluna; 
+    printf("Informe o número da coluna pela qual deseja ordenar (0, 1, 2): ");
+    scanf("%d", &coluna);
+
+    printf("Matriz original:\n");
+    iMatriz(matriz, linhas, colunas);
+
+    ordenarMatriz(matriz, linhas, coluna);
+
+    printf("\nMatriz ordenada pela coluna %d:\n", coluna);
+    iMatriz(matriz, linhas, colunas);
+
+    return 0;
+}
