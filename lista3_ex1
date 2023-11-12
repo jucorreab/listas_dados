@@ -1,0 +1,74 @@
+//solicite o tamanho da lisa e possua um método de inserir Lista Ordenada, que cria a lista de forma ordenado 
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node{
+	int data;
+	struct Node *next;
+};
+
+struct Node *criarNovo( int valor){
+	struct Node *novoNo = (struct Node *)malloc(sizeof(struct Node));
+	novoNo -> data = valor;
+	novoNo -> next = NULL;
+	return novoNo;
+}
+
+void inserirListaOrdenada(struct Node *head, int valor){
+	struct Node *novoNo = criarNovoNo(valor);
+	struct Node *atual = *head;
+	struct Node *anterior = NULL;
+	
+	while (atual !=NULL && atual->data < valor){
+		anterior = atual;
+		atual = atual -> next;
+	}
+	
+	if(anterior==NULL){
+		novoNo->next = *head;
+		*head = novoNo;
+	}else{
+		anterior->next = novoNo;
+		novoNo->next = atual;
+	}
+}
+
+void imprimirLista(struct Node *head){
+	struct Node *atual = head;
+	while(atual != NULL){
+		printf("%d ->", atual->data);
+		atual = atual->next;
+	}
+	printf("NULL\n");
+}
+
+void liberarLista(struct Node *head){
+	struct Node *atual = head;
+	while(atual!=NULL){
+		struct Node *temp = atual;
+		atual = atual->next;
+		free(temp);
+	}
+}
+
+int main(){
+	struct Node *lista = NULL;
+	int tamanho;
+	int i;
+	
+	printf("Informe o tamanho da lista: \n");
+	scanf("%d", &tamanho);
+	
+	for(i=0; i<tamanho; i++){
+		int valor; 
+		printf("Informe o valor %d: \n", i+1);
+		scanf("%d", &valor);
+		inserirListaOrdenada(&lista, valor);
+	}
+	
+	printf("Lista ordenada: \n");
+	imprimirLista(lista);
+	liberarLista(lista);
+	
+	return 0;
+}
